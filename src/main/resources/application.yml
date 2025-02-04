@@ -1,0 +1,23 @@
+spring:
+  # H2 Console 설정
+  h2:
+    console:
+      enabled: true  # H2 Console을 사용할지 여부
+      path: /h2-console  # H2 Console의 접근 경로
+
+  # 데이터베이스 설정
+  datasource:
+    driver-class-name: org.h2.Driver  # H2 드라이버 사용
+    url: jdbc:h2:mem:management  # 메모리 내 데이터베이스 (테스트용)
+    username: sa  # 접속할 사용자명
+    password:  # 비밀번호 (없으면 공백으로 설정)
+
+  # JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: create  # 테이블 자동 생성 및 업데이트 (설정에 따라 'none', 'update', 'create', 'create-drop' 등이 가능)
+    show-sql: true  # SQL 쿼리를 로그에 출력
+    database-platform: org.hibernate.dialect.H2Dialect  # H2 데이터베이스용 Hibernate Dialect 설정
+    properties:
+      hibernate:
+        format_sql: true  # SQL을 보기 쉽게 포맷
