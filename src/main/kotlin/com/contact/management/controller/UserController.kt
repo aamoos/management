@@ -19,29 +19,24 @@ class UserController(
 
     @GetMapping("/{id}")
     fun getUser(@PathVariable id: Long): ResponseEntity<UserDto> {
-        val user = userService.getUserById(id)
-        return user.let {
-            ResponseEntity.ok(it)
-        } ?: ResponseEntity.notFound().build()
+        return ResponseEntity.ok(userService.getUserById(id))
     }
 
     @PostMapping
-    fun createdUser(@RequestBody userDto: UserDto): ResponseEntity<UserDto> {
+    fun createUser(@RequestBody userDto: UserDto): ResponseEntity<UserDto> {
         val createdUser = userService.createdUser(userDto)
-        return ResponseEntity.status(201).body(createdUser) // 201 Created 상태 코드
+        return ResponseEntity.status(201).body(createdUser) // 201 Created
     }
 
     @PutMapping("/{id}")
     fun updateUser(@PathVariable id: Long, @RequestBody userDto: UserDto): ResponseEntity<UserDto> {
         val updatedUser = userService.updateUser(id, userDto)
-        return updatedUser.let {
-            ResponseEntity.ok(it)
-        } ?: ResponseEntity.notFound().build() // 404 상태 코드 반환
+        return ResponseEntity.ok(updatedUser)
     }
 
     @DeleteMapping("/{id}")
     fun deleteUser(@PathVariable id: Long): ResponseEntity<Void> {
         userService.deleteUser(id)
-        return ResponseEntity.noContent().build() // 204 No Content 상태 코드
+        return ResponseEntity.noContent().build() // 204 No Content
     }
 }
