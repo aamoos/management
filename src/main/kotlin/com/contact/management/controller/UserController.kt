@@ -2,6 +2,9 @@ package com.contact.management.controller
 
 import com.contact.management.dto.UserDto
 import com.contact.management.service.UserService
+import jakarta.validation.Valid
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -23,13 +26,16 @@ class UserController(
     }
 
     @PostMapping
-    fun createUser(@RequestBody userDto: UserDto): ResponseEntity<UserDto> {
+    fun createUser(@Valid @RequestBody userDto: UserDto): ResponseEntity<UserDto> {
         val createdUser = userService.createdUser(userDto)
-        return ResponseEntity.status(201).body(createdUser) // 201 Created
+        return ResponseEntity
+            .status(HttpStatus.CREATED) // 201 Created
+            .header(HttpHeaders.LOCATION, "/api/users/${createdUser.id}") // 생성된 리소스의 URI 반환
+            .body(createdUser)
     }
 
     @PutMapping("/{id}")
-    fun updateUser(@PathVariable id: Long, @RequestBody userDto: UserDto): ResponseEntity<UserDto> {
+    fun updateUser(@PathVariable id: Long,@Valid @RequestBody userDto: UserDto): ResponseEntity<UserDto> {
         val updatedUser = userService.updateUser(id, userDto)
         return ResponseEntity.ok(updatedUser)
     }
