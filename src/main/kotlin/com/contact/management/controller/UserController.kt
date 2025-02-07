@@ -1,8 +1,11 @@
 package com.contact.management.controller
 
 import com.contact.management.dto.UserDto
+import com.contact.management.service.QuerydslUserService
 import com.contact.management.service.UserService
 import jakarta.validation.Valid
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -11,7 +14,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/users")
 class UserController(
-    private val userService: UserService
+     private val userService: UserService
+    ,private val querydslUserService: QuerydslUserService
 ) {
 
     @GetMapping
@@ -44,5 +48,11 @@ class UserController(
     fun deleteUser(@PathVariable id: Long): ResponseEntity<Void> {
         userService.deleteUser(id)
         return ResponseEntity.noContent().build() // 204 No Content
+    }
+
+    @GetMapping("/paged")
+    fun getUsersWithPaging(pageable: Pageable): Page<UserDto> {
+        // 페이징된 사용자 목록 반환
+        return querydslUserService.getUsersWithPaging(pageable)
     }
 }
