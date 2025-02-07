@@ -15,10 +15,12 @@ class UserService(
     private val userRepository: UserRepository
 ) {
 
+    @Transactional(readOnly = true)
     fun getAllUsers() : List<UserDto> {
         return userRepository.findAll().map { UserDto(it.id, it.name, it.email) }
     }
 
+    @Transactional(readOnly = true)
     fun getUserById(id: Long): UserDto {
         val user = userRepository.findById(id).orElseThrow{ CommonException(USER_NOT_FOUND) }
         return UserDto(user.id, user.name, user.email)
