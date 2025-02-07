@@ -51,8 +51,8 @@ class UserController(
     }
 
     @GetMapping("/paged")
-    fun getUsersWithPaging(pageable: Pageable): Page<UserDto> {
+    fun getUsersWithPaging(pageable: Pageable, @RequestParam searchVal: String?): Page<UserDto> {
         // 페이징된 사용자 목록 반환
-        return querydslUserService.getUsersWithPaging(pageable)
+        return querydslUserService.getUsersWithPaging(pageable, searchVal)
     }
 }
