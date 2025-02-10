@@ -1,8 +1,7 @@
 package com.contact.management.service
 
-import com.contact.management.dto.UserDto
+import com.contact.management.dto.UserResponse
 import com.contact.management.entity.QUser
-import com.contact.management.repository.UserRepository
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.domain.Page
@@ -18,7 +17,7 @@ class QuerydslUserService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getUsersWithPaging(pageable: Pageable, searchVal: String?): Page<UserDto> {
+    fun getUsersWithPaging(pageable: Pageable, searchVal: String?): Page<UserResponse> {
         val qUser = QUser.user
         var predicate: BooleanExpression = qUser.isNotNull
 
@@ -46,7 +45,7 @@ class QuerydslUserService(
         val total = countQuery.fetchOne() ?: 0L // fetchOne()으로 단일 값 가져오기
 
         // Page 객체로 반환
-        val userDtos = users.map { UserDto(it.id, it.name, it.email) }
+        val userDtos = users.map { UserResponse(it.id, it.name, it.age, it.email) }
         return PageImpl(userDtos, pageable, total)
     }
 
