@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
@@ -19,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+//@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)         //PreAuthorize 사용하기위한
 class SecurityConfig(
     private val customUserDetailsService: CustomUserDetailsService,
     private val jwtUtil: JwtUtil,
@@ -28,7 +31,7 @@ class SecurityConfig(
 
     companion object {
         private val AUTH_WHITELIST = arrayOf(
-            "/api/users/**"
+            "/api/users/**", // Allows unrestricted access to this endpoint
         )
     }
 
@@ -44,17 +47,20 @@ class SecurityConfig(
             .csrf { it.disable() }
             .cors { }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-            .formLogin { it.disable() }
-            .httpBasic { it.disable() }
-            .addFilterBefore(JwtAuthFilter(customUserDetailsService, jwtUtil), UsernamePasswordAuthenticationFilter::class.java)
+            .authorizeHttpRequests {
+                it
+                    .requestMatchers(*AUTH_WHITELIST).permitAll()
+                    .requestMatchers("/api/test/users").hasAuthority("ROLE_USER")   //USER 역할만 접근 허용
+                    .requestMatchers("/api/test/admin").hasAuthority("ROLE_ADMIN")  // ADMIN 역할만 접근 허용
+                    .anyRequest().authenticated()
+            }
             .exceptionHandling {
                 it.authenticationEntryPoint(authenticationEntryPoint)
                     .accessDeniedHandler(accessDeniedHandler)
             }
-            .authorizeHttpRequests {
-                it.requestMatchers(*AUTH_WHITELIST).permitAll()
-                    .anyRequest().authenticated()
-            }
+            .addFilterBefore(JwtAuthFilter(customUserDetailsService, jwtUtil), UsernamePasswordAuthenticationFilter::class.java)
+            .formLogin { it.disable() }
+            .httpBasic { it.disable() }
         return http.build()
     }
 

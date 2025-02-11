@@ -44,7 +44,7 @@ class JwtUtil(
         val claims: Claims = Jwts.claims().apply {
             put("id", user.id)
             put("email", user.email)
-            put("role", user)
+            put("authorities", user.role)
         }
 
         val now = ZonedDateTime.now()

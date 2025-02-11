@@ -24,4 +24,4 @@ spring:
 
 jwt:
   expiration_time: 86400000 #1일
-  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+  secret: b4ddef942572f6e1c8909430b8a9316cc58a82252ec8aa4a4ba3e7233232b254

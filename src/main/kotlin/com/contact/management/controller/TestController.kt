@@ -14,8 +14,15 @@ class TestController {
         return "ok";
     }
 
-    @PostMapping("/jwtTest")
-    fun jwtTest(@RequestBody loginRequest: LoginRequest): LoginRequest {
+    @PostMapping("/api/test/user")
+//    @PreAuthorize("hasRole('ROLE_USER')")
+    fun userTest(@RequestBody loginRequest: LoginRequest): LoginRequest {
+        return loginRequest
+    }
+
+    @PostMapping("/api/test/admin")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    fun adminTest(@RequestBody loginRequest: LoginRequest): LoginRequest {
         return loginRequest
     }
 

@@ -30,15 +30,10 @@ class JwtAuthFilter(
                 // 유저와 토큰 일치 시 userDetails 생성
                 val userDetails: UserDetails = customUserDetailsService.loadUserByUsername(userId.toString())
 
-                if (userDetails != null) {
-                    // UserDetails, Password, Role -> 접근 권한 인증 Token 생성
-                    val usernamePasswordAuthenticationToken = UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.authorities
-                    )
-
-                    // 현재 Request의 Security Context에 접근 권한 설정
-                    SecurityContextHolder.getContext().authentication = usernamePasswordAuthenticationToken
-                }
+                val usernamePasswordAuthenticationToken = UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.authorities
+                )
+                SecurityContextHolder.getContext().authentication = usernamePasswordAuthenticationToken
             }
         }
 

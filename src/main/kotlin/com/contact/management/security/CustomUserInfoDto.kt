@@ -1,6 +1,7 @@
 package com.contact.management.security
 
 //내부에서 사용하는 dto
+import com.contact.management.entity.RoleType
 import com.contact.management.entity.User
 
 data class CustomUserDto(

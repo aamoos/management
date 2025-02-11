@@ -9,9 +9,9 @@ class CustomUserDetails(
 ) : UserDetails {
 
     override fun getAuthorities(): Collection<GrantedAuthority> {
-        // Assuming role is part of the member object, you can change accordingly
-        val roles = listOf("ROLE_USER") // Or map it to a member role field if available
-        return roles.map { SimpleGrantedAuthority(it) }
+        // RoleType에 따라 권한 리스트를 생성
+        val roles = listOf(member.role).map { role -> SimpleGrantedAuthority(role.name) }
+        return roles
     }
 
     override fun getPassword(): String = member.password // Ensure the DTO has password if needed

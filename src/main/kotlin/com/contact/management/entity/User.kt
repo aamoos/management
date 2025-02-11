@@ -3,7 +3,6 @@ package com.contact.management.entity
 import com.contact.management.audit.BaseEntity
 import com.contact.management.dto.SignUpRequest
 import com.contact.management.dto.UserUpdateRequest
-import com.contact.management.security.RoleType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -35,7 +34,7 @@ class User (
             name = request.name,
             age = request.age,
             email = request.email,
-            role = RoleType.USER
+            role = RoleType.ROLE_USER
         )
     }
 
