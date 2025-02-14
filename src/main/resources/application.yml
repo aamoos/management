@@ -5,3 +5,7 @@ spring:
 jwt:
   expiration_time: 86400000 # 1일
   secret: b4ddef942572f6e1c8909430b8a9316cc58a82252ec8aa4a4ba3e7233232b254
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG  # Hibernate 쿼리 로그 출력
