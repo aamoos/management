@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://dpg-cundam0gph6c73er275g-a.singapore-postgres.render.com:5432/management_efjj
+    username: management
+    password: wqGXX1W74YM37QRgu3WAs6VHdFQwzADP
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: false
