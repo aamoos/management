@@ -32,6 +32,8 @@ class SecurityConfig(
     companion object {
         private val AUTH_WHITELIST = arrayOf(
             "/api/users/**", // Allows unrestricted access to this endpoint
+            "/",
+            "/front/**"
         )
     }
 

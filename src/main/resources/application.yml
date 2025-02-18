@@ -1,10 +1,12 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   profiles:
-    active: prod  # 기본적으로 local 프로파일 사용 (운영에서는 prod로 변경)
+    active: ${SPRING_PROFILES_ACTIVE}  # 기본적으로 local 프로파일 사용 (운영에서는 prod로 변경)
 
 jwt:
   expiration_time: 86400000 # 1일
-  secret: b4ddef942572f6e1c8909430b8a9316cc58a82252ec8aa4a4ba3e7233232b254
+  secret: ${secret}
 
 logging:
   level:

@@ -39,9 +39,17 @@ dependencies {
 	kapt("jakarta.annotation:jakarta.annotation-api")
 	kapt("jakarta.persistence:jakarta.persistence-api")
 
+	//security
 	implementation ("org.springframework.boot:spring-boot-starter-security")
 
-	implementation("org.postgresql:postgresql:42.2.24")
+	//postgres
+	implementation("org.postgresql:postgresql")
+
+	//thymeleaf
+	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+
+	//dotenv
+	implementation ("io.github.cdimascio:java-dotenv:5.2.2")
 
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

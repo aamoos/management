@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>파일 업로드</title>
+</head>
+<body>
+<h1>파일 업로드</h1>
+
+<!-- 업로드 상태 메시지 출력 -->
+<div th:if="${message}" th:text="${message}"></div>
+
+<!-- 단일 파일 업로드 폼 -->
+<h2>단일 파일 업로드</h2>
+<form th:action="@{/front/upload}" method="post" enctype="multipart/form-data">
+  <label for="file">파일 선택:</label>
+  <input type="file" id="file" name="file" required>
+  <button type="submit">업로드</button>
+</form>
+
+<!-- 멀티파일 업로드 폼 -->
+<h2>멀티파일 업로드</h2>
+<form th:action="@{/front/multi-upload}" method="post" enctype="multipart/form-data">
+  <label for="files">파일 선택:</label>
+  <input type="file" id="files" name="files" multiple required>
+  <button type="submit">업로드</button>
+</form>
+
+</body>
+</html>
